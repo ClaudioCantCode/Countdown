@@ -47,41 +47,38 @@ struct ContentView: View {
         .padding()
         .fullScreenCover(isPresented: $isPresented, content: {
             NavigationStack {
-                List {
+                   List {
                     Section(header: Text("Pick a name")) {
                         TextField("Name your countdown", text: $text)
                         
                     }
-                    .font(Font.custom("Comic Sans MS", size:13))
+                    
                     
                     Section(header: Text("Pick an emoji icon")) {
                     }
-                    .font(Font.custom("Comic Sans MS", size:13))
+                       
                     Section(header: Text("Pick a date")) {
                         DatePicker(selection: .constant(.now), displayedComponents: .date) {
                             Text("data")
                         }
                         .datePickerStyle(.graphical)
                     }
-                    .font(Font.custom("Comic Sans MS", size:13))
                     Section(header: Text("Pick a time")) {
                         DatePicker(selection: .constant(.now), displayedComponents: .hourAndMinute) {
                             Text("All-day")
                         }
                     }
-                    .font(Font.custom("Comic Sans MS", size:13))
                     Section(header: Text("Repeat")) {
                         Text("Item 1")
                     }
-                    .font(Font.custom("Comic Sans MS", size:13))
                     Section(header: Text("Remind me")) {
                         Text("Item 1")
                     }
-                    .font(Font.custom("Comic Sans MS", size:13))
                     Section(header: Text("Pick a color")) {
                         Text("Item 1")
                     }
                 }
+                .font(Font.custom("Comic Sans MS", size:13))
                 .toolbar(content: {
                     ToolbarItem(placement: .navigationBarLeading) {
                         
