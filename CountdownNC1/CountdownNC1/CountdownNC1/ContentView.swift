@@ -13,11 +13,10 @@ struct ContentView: View {
     var body: some View {
             
         Text("Countdowns")
-                .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-                .bold()
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding()
-                .font(Font.custom("Comic Sans MS", size:20))
+            .bold()
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
+            .font(Font.custom("Comic Sans MS", size:35))
        
         Spacer()
         
@@ -38,7 +37,7 @@ struct ContentView: View {
                     }
                     .bold()
                     .foregroundColor(.white)
-                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                    .font(Font.custom("Comic Sans MS Bold", size:30))
                 }
                 }
         }
