@@ -20,6 +20,15 @@ struct ContentView: View {
     @State private var selectedRepeat: Repeat = .off
     @State var repeatWeek: Int = 0
     @State var repeatMonth: Int = 0
+    @State var ComicSans: Bool = false
+    
+    @Environment(\.font) private var environmentFont: Font?
+    
+    var formattedDateString: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd-MM"
+        return dateFormatter.string(from: selectedDate)
+    }
     
     var body: some View {
         
@@ -27,7 +36,7 @@ struct ContentView: View {
             .bold()
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding()
-            .font(Font.custom("Comic Sans MS", size:35))
+            .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
         
         Spacer()
         
@@ -48,7 +57,7 @@ struct ContentView: View {
                     }
                     .bold()
                     .foregroundColor(.white)
-                    .font(Font.custom("Comic Sans MS Bold", size:30))
+                    .font(.title)
                 }
             }
         }
@@ -62,14 +71,15 @@ struct ContentView: View {
                     }
                     
                     Section(header: Text("Pick an emoji icon")) {
+                        
+                        
+                        
                     }
-                       
                     Section(header: Text("Pick a date")) {
-                        DatePicker(selection: .constant(.now), displayedComponents: .date) {
-                            Text("data")
-                        }
-                        .datePickerStyle(.graphical)
-                    }
+                        DatePicker("", selection: $selectedDate, displayedComponents: .date)
+                            .datePickerStyle(.graphical)
+                           
+                       }
                        Section(header: Text("Pick a time")) {
                            VStack(alignment: .leading) {
                             Toggle("All-day", isOn: $isChecked)
@@ -118,10 +128,9 @@ struct ContentView: View {
                         }
                     }
                     Section(header: Text("Pick a color")) {
-                        Text("Item 1")
+                        ColorPicker("", selection: .constant(.red))
                     }
-                }
-                .font(Font.custom("Comic Sans MS", size:15))
+                   }
                 .toolbar(content: {
                     ToolbarItem(placement: .navigationBarLeading) {
                         
@@ -148,9 +157,9 @@ struct ContentView: View {
            case .weekly:
                return "Countdown will repeat every \(repeatWeek) weeks"
            case .monthly:
-               return "Countdown will repeat every \(repeatMonth) months on the"
+               return "Countdown will repeat every \(repeatMonth) months on the \(formattedDateString)"
            case .yearly:
-               return "Countdown will repeat yearly on"
+               return "Countdown will repeat yearly on \(formattedDateString)"
            }
     }
     func getRecurrenceText2() -> String {
@@ -162,7 +171,7 @@ struct ContentView: View {
            case .monthly:
                return "Repeat every \(repeatMonth) months"
            case .yearly:
-               return "Countdown will repeat yearly on"
+               return "Countdown will repeat yearly on \(formattedDateString)"
            }
     }
     
