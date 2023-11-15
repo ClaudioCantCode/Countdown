@@ -7,11 +7,19 @@
 
 import SwiftUI
 
+enum Repeat {
+    case off, weekly, monthly, yearly
+}
+
 struct ContentView: View {
     @State private var scale: CGFloat = 1.5
     @State var isPresented: Bool = false
     @State var isChecked: Bool = true
+    @State private var selectedDate = Date()
     @State private var text: String = ""
+    @State private var selectedRepeat: Repeat = .off
+    @State var repeatWeek: Int = 0
+    @State var repeatMonth: Int = 0
     
     var body: some View {
         
@@ -53,7 +61,6 @@ struct ContentView: View {
                         
                     }
                     
-                    
                     Section(header: Text("Pick an emoji icon")) {
                     }
                        
@@ -63,22 +70,58 @@ struct ContentView: View {
                         }
                         .datePickerStyle(.graphical)
                     }
-                    Section(header: Text("Pick a time")) {
-                        DatePicker(selection: .constant(.now), displayedComponents: .hourAndMinute) {
-                            Text("All-day")
-                        }
+                       Section(header: Text("Pick a time")) {
+                           VStack(alignment: .leading) {
+                            Toggle("All-day", isOn: $isChecked)
+                            if !isChecked {
+                            DatePicker("", selection: $selectedDate, displayedComponents: .hourAndMinute)
+                                .datePickerStyle(.wheel)
+                               }
+                           }
                     }
-                    Section(header: Text("Repeat")) {
-                        Text("Item 1")
-                    }
+                       Section(header: Text("Repeat")) {
+                           Picker(selection: $selectedRepeat, label: Text("Repeat")) {
+                               Text("Off").tag(Repeat.off)
+                               Text("Weekly").tag(Repeat.weekly)
+                               Text("Monthly").tag(Repeat.monthly)
+                               Text("Yearly").tag(Repeat.yearly)
+                           }
+                           .pickerStyle(.segmented)
+                           if selectedRepeat != .off {
+                               if(selectedRepeat == Repeat.weekly){
+                                   Stepper(value: $repeatWeek, in: 0...100) {
+                                       Text(getRecurrenceText2())
+                                   }
+                                   
+                               }else{
+                                   if(selectedRepeat == Repeat.monthly){
+                                       Stepper(value: $repeatMonth, in: 0...100) {
+                                           Text(getRecurrenceText2())
+                                       }
+                                   }
+                                   
+                               }
+                               
+                               Text(getRecurrenceText())
+                                   .padding()
+                           }
+                       }
                     Section(header: Text("Remind me")) {
-                        Text("Item 1")
+                        Toggle(isOn: .constant(true)) {
+                            Text("When the countdown finishes")
+                        }
+                        Toggle(isOn: .constant(false)) {
+                            Text("1 day before")
+                        }
+                        Toggle(isOn: .constant(false)) {
+                            Text("1 week before")
+                        }
                     }
                     Section(header: Text("Pick a color")) {
                         Text("Item 1")
                     }
                 }
-                .font(Font.custom("Comic Sans MS", size:13))
+                .font(Font.custom("Comic Sans MS", size:15))
                 .toolbar(content: {
                     ToolbarItem(placement: .navigationBarLeading) {
                         
@@ -97,6 +140,32 @@ struct ContentView: View {
             }
         })
     }
+    
+    func getRecurrenceText() -> String {
+           switch selectedRepeat {
+           case .off:
+               return "No recurrence"
+           case .weekly:
+               return "Countdown will repeat every \(repeatWeek) weeks"
+           case .monthly:
+               return "Countdown will repeat every \(repeatMonth) months on the"
+           case .yearly:
+               return "Countdown will repeat yearly on"
+           }
+    }
+    func getRecurrenceText2() -> String {
+           switch selectedRepeat {
+           case .off:
+               return "No recurrence"
+           case .weekly:
+               return "Repeat every \(repeatWeek) weeks"
+           case .monthly:
+               return "Repeat every \(repeatMonth) months"
+           case .yearly:
+               return "Countdown will repeat yearly on"
+           }
+    }
+    
 }
 
 
