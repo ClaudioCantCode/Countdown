@@ -10,7 +10,6 @@ import SwiftUI
 @main
 struct CountdownNC1App: App {
     
-    
     var body: some Scene {
         WindowGroup {
             ContentView()

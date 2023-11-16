@@ -13,6 +13,7 @@
 		935E7A942B02CEEA009D7B56 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 935E7A932B02CEEA009D7B56 /* Preview Assets.xcassets */; };
 		935E7A9B2B036FAB009D7B56 /* Comic Sans MS.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 935E7A9A2B036FAB009D7B56 /* Comic Sans MS.ttf */; };
 		935E7A9E2B0374E0009D7B56 /* Comic Sans MS Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 935E7A9D2B0374E0009D7B56 /* Comic Sans MS Bold.ttf */; };
+		935E7AA02B064DDE009D7B56 /* MadeCountdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935E7A9F2B064DDE009D7B56 /* MadeCountdown.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		935E7A9A2B036FAB009D7B56 /* Comic Sans MS.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Comic Sans MS.ttf"; sourceTree = "<group>"; };
 		935E7A9C2B037218009D7B56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		935E7A9D2B0374E0009D7B56 /* Comic Sans MS Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Comic Sans MS Bold.ttf"; sourceTree = "<group>"; };
+		935E7A9F2B064DDE009D7B56 /* MadeCountdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MadeCountdown.swift; sourceTree = "<group>"; tabWidth = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			children = (
 				935E7A9C2B037218009D7B56 /* Info.plist */,
 				935E7A8C2B02CEE9009D7B56 /* CountdownNC1App.swift */,
+				935E7A9F2B064DDE009D7B56 /* MadeCountdown.swift */,
 				935E7A8E2B02CEE9009D7B56 /* ContentView.swift */,
 				935E7A9A2B036FAB009D7B56 /* Comic Sans MS.ttf */,
 				935E7A9D2B0374E0009D7B56 /* Comic Sans MS Bold.ttf */,
@@ -147,6 +150,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				935E7AA02B064DDE009D7B56 /* MadeCountdown.swift in Sources */,
 				935E7A8F2B02CEE9009D7B56 /* ContentView.swift in Sources */,
 				935E7A8D2B02CEE9009D7B56 /* CountdownNC1App.swift in Sources */,
 			);

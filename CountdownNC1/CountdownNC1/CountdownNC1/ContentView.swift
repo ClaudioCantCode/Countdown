@@ -20,9 +20,10 @@ struct ContentView: View {
     @State private var selectedRepeat: Repeat = .off
     @State var repeatWeek: Int = 0
     @State var repeatMonth: Int = 0
-    @State var ComicSans: Bool = false
-    
-    @Environment(\.font) private var environmentFont: Font?
+    @State var daybefore: Bool = false
+    @State var weekbefore: Bool = false
+    @State private var selectedColor: Color = .blue
+    @State private var pickerColor: Color = .red
     
     var formattedDateString: String {
         let dateFormatter = DateFormatter()
@@ -120,15 +121,28 @@ struct ContentView: View {
                         Toggle(isOn: .constant(true)) {
                             Text("When the countdown finishes")
                         }
-                        Toggle(isOn: .constant(false)) {
+                        Toggle(isOn: $daybefore) {
                             Text("1 day before")
                         }
-                        Toggle(isOn: .constant(false)) {
+                        Toggle(isOn: $weekbefore) {
                             Text("1 week before")
                         }
                     }
                     Section(header: Text("Pick a color")) {
-                        ColorPicker("", selection: .constant(.red))
+                        VStack {
+                            HStack(spacing: 10) {
+                                Button{ print("")
+                                } label: {
+                                     Circle()
+                                        .frame(width: 40)
+                                        .overlay(){
+                                            Text("ok")
+                                        }
+                                    
+                                }
+                        }
+                            ColorPicker("", selection: $pickerColor)
+                        }
                     }
                    }
                 .toolbar(content: {
@@ -137,13 +151,12 @@ struct ContentView: View {
                         Button("Cancel") {
                             isPresented = false
                         }
-                        .bold()
+
                     }
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button("Save") {
                             isPresented = false
                         }
-                        .bold()
                     }
                 })
             }
