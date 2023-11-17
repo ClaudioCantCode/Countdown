@@ -10,6 +10,9 @@ import SwiftUI
 enum Repeat {
     case off, weekly, monthly, yearly
 }
+enum Emoji {
+    case party, lunch, travel, job
+}
 
 struct ContentView: View {
     @State private var scale: CGFloat = 1.5
@@ -24,6 +27,10 @@ struct ContentView: View {
     @State var weekbefore: Bool = false
     @State private var selectedColor: Color = .blue
     @State private var pickerColor: Color = .red
+    @State private var emojiSelector: Emoji = .party
+    //Array
+    @State var CountdownList: [String] = ["OK"]
+    //Array
     
     var formattedDateString: String {
         let dateFormatter = DateFormatter()
@@ -38,6 +45,13 @@ struct ContentView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding()
             .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+        List{
+            ForEach(CountdownList, id: \.self) { item in
+                NavigationLink(destination: MadeCountdown(), label: {
+                    Rectangle().frame(width: 370, height: 80)
+                })
+            }
+        }.listStyle(.plain)
         
         Spacer()
         
@@ -66,13 +80,20 @@ struct ContentView: View {
         .fullScreenCover(isPresented: $isPresented, content: {
             NavigationStack {
                    List {
-                    Section(header: Text("Pick a name")) {
+                       Section(header: Text("Pick a name")) {
                         TextField("Name your countdown", text: $text)
                         
                     }
                     
                     Section(header: Text("Pick an emoji icon")) {
                         
+                        Picker(selection: $emojiSelector, label: Text("Emoji")) {
+                            Text("🎉").tag(Emoji.party)
+                            Text("🍽️").tag(Emoji.lunch)
+                            Text("✈️").tag(Emoji.travel)
+                            Text("💼").tag(Emoji.job)
+                        }
+                        .pickerStyle(.segmented)
                         
                         
                     }
@@ -155,6 +176,7 @@ struct ContentView: View {
                     }
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button("Save") {
+                            CountdownList.append(text)
                             isPresented = false
                         }
                     }
