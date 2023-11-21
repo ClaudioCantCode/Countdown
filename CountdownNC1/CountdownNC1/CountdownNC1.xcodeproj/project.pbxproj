@@ -14,18 +14,22 @@
 		935E7A9B2B036FAB009D7B56 /* Comic Sans MS.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 935E7A9A2B036FAB009D7B56 /* Comic Sans MS.ttf */; };
 		935E7A9E2B0374E0009D7B56 /* Comic Sans MS Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 935E7A9D2B0374E0009D7B56 /* Comic Sans MS Bold.ttf */; };
 		935E7AA02B064DDE009D7B56 /* MadeCountdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935E7A9F2B064DDE009D7B56 /* MadeCountdown.swift */; };
+		93A404162B0B562B00FF57D6 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A404152B0B562B00FF57D6 /* ContentViewModel.swift */; };
+		93A404182B0CA2B900FF57D6 /* ModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A404172B0CA2B900FF57D6 /* ModalView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		935E7A892B02CEE9009D7B56 /* CountdownNC1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CountdownNC1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		935E7A8C2B02CEE9009D7B56 /* CountdownNC1App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownNC1App.swift; sourceTree = "<group>"; };
-		935E7A8E2B02CEE9009D7B56 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		935E7A8E2B02CEE9009D7B56 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; };
 		935E7A902B02CEEA009D7B56 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		935E7A932B02CEEA009D7B56 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		935E7A9A2B036FAB009D7B56 /* Comic Sans MS.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Comic Sans MS.ttf"; sourceTree = "<group>"; };
 		935E7A9C2B037218009D7B56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		935E7A9D2B0374E0009D7B56 /* Comic Sans MS Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Comic Sans MS Bold.ttf"; sourceTree = "<group>"; };
 		935E7A9F2B064DDE009D7B56 /* MadeCountdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MadeCountdown.swift; sourceTree = "<group>"; tabWidth = 4; };
+		93A404152B0B562B00FF57D6 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
+		93A404172B0CA2B900FF57D6 /* ModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +66,8 @@
 				935E7A8C2B02CEE9009D7B56 /* CountdownNC1App.swift */,
 				935E7A9F2B064DDE009D7B56 /* MadeCountdown.swift */,
 				935E7A8E2B02CEE9009D7B56 /* ContentView.swift */,
+				93A404152B0B562B00FF57D6 /* ContentViewModel.swift */,
+				93A404172B0CA2B900FF57D6 /* ModalView.swift */,
 				935E7A9A2B036FAB009D7B56 /* Comic Sans MS.ttf */,
 				935E7A9D2B0374E0009D7B56 /* Comic Sans MS Bold.ttf */,
 				935E7A902B02CEEA009D7B56 /* Assets.xcassets */,
@@ -150,9 +156,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93A404162B0B562B00FF57D6 /* ContentViewModel.swift in Sources */,
 				935E7AA02B064DDE009D7B56 /* MadeCountdown.swift in Sources */,
 				935E7A8F2B02CEE9009D7B56 /* ContentView.swift in Sources */,
 				935E7A8D2B02CEE9009D7B56 /* CountdownNC1App.swift in Sources */,
+				93A404182B0CA2B900FF57D6 /* ModalView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

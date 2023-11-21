@@ -14,201 +14,160 @@ enum Emoji {
     case party, lunch, travel, job
 }
 
+
+
+
+
 struct ContentView: View {
+    
+    
+    @ObservedObject var ObjectList = EventsView
+    
+    
+    @StateObject private var viewModel = ContentViewModel()
+
+    @State private var timer: Timer?
+    
     @State private var scale: CGFloat = 1.5
     @State var isPresented: Bool = false
     @State var isChecked: Bool = true
-    @State private var selectedDate = Date()
+    
     @State private var text: String = ""
     @State private var selectedRepeat: Repeat = .off
     @State var repeatWeek: Int = 0
     @State var repeatMonth: Int = 0
     @State var daybefore: Bool = false
     @State var weekbefore: Bool = false
-    @State private var selectedColor: Color = .blue
-    @State private var pickerColor: Color = .red
-    @State private var emojiSelector: Emoji = .party
+    
+  
+   
     //Array
-    @State var CountdownList: [String] = ["OK"]
+    @State var CountdownList: [String] = []
+    
+    
     //Array
     
-    var formattedDateString: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM"
-        return dateFormatter.string(from: selectedDate)
-    }
+    
+    
     
     var body: some View {
         
-        Text("Countdowns")
-            .bold()
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding()
-            .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-        List{
-            ForEach(CountdownList, id: \.self) { item in
-                NavigationLink(destination: MadeCountdown(), label: {
-                    Rectangle().frame(width: 370, height: 80)
-                })
-            }
-        }.listStyle(.plain)
         
-        Spacer()
-        
-        VStack {
-            ZStack {
-                RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
-                    .frame(width: 270, height: 70)
-                    .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
-                
-                HStack {
-                    Image(systemName: "plus.circle.fill")
-                        .scaledToFit()
-                        .scaleEffect(scale)
-                        .foregroundColor(.white)
+        NavigationStack {
+            VStack {
+                List{
                     
-                    Button("New Countdown") {
-                        isPresented = true
+                    ForEach(ObjectList.EventList) { event in
+                        NavigationLink {
+                            MadeCountdown(myEvent: event)
+                        } label: {
+                            HStack {
+                                RoundedRectangle(cornerRadius: 20)
+                                    .foregroundColor(event.color)
+                                    .frame(width: 370, height: 95)
+                                    .overlay {
+                                        HStack {
+                                            Text(getRecurrenceEmoji(emojiLocal: event.emoji))
+                                            .font(.title)
+                                            
+                                            VStack {
+                                                if event.text == "" {
+                                                    Text("Countdown")
+                                                        .font(.title)
+                                                        
+                                                }
+                                                Text("\(event.text)")
+                                                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                                                Text("\(event.selectedDate)")
+                                            }
+                                            .foregroundColor(.white)
+                                            RoundedRectangle(cornerRadius: 20)
+                                                .foregroundColor(.black)
+                                                .opacity(0.5)
+                                                .frame(width: 100, height: 95)
+                                                .overlay {
+                                                    VStack {
+                                                        Text(String(event.remainingDays)).foregroundColor(.white)
+                                                        Text("Days left").foregroundColor(.white)
+                                                    }
+                                                }.offset(x: 18)
+                                            
+                                        }.padding()
+                                    }
+                            }
+                        }
                     }
-                    .bold()
-                    .foregroundColor(.white)
-                    .font(.title)
+                    .onDelete(perform: { indexSet in
+                            ObjectList.EventList.remove(atOffsets: indexSet)
+                    })
                 }
+                .listStyle(.plain)
+                
+                Spacer()
+                
+                VStack {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
+                            .frame(width: 270, height: 70)
+                            .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                        
+                        HStack {
+                            Image(systemName: "plus.circle.fill")
+                                .scaledToFit()
+                                .scaleEffect(scale)
+                                .foregroundColor(.white)
+                            
+                            Button("New Countdown") {
+                                isPresented = true
+                                startTimer()
+                            }
+                            .bold()
+                            .foregroundColor(.white)
+                            .font(.title)
+                            .onTapGesture {
+                            startTimer()
+                            }
+                        }
+                    }
+                }
+                .padding()
+               
             }
+            .fullScreenCover(isPresented: $isPresented){
+                ModalView(isPresented: $isPresented)
+            }
+            .onAppear {
+                viewModel.calculateRemainingDays()
+                startTimer()
+            }
+            .onDisappear {
+                stopTimer()
+                       }
+            .navigationTitle("Countdowns")
         }
-        .padding()
-        .fullScreenCover(isPresented: $isPresented, content: {
-            NavigationStack {
-                   List {
-                       Section(header: Text("Pick a name")) {
-                        TextField("Name your countdown", text: $text)
-                        
-                    }
-                    
-                    Section(header: Text("Pick an emoji icon")) {
-                        
-                        Picker(selection: $emojiSelector, label: Text("Emoji")) {
-                            Text("🎉").tag(Emoji.party)
-                            Text("🍽️").tag(Emoji.lunch)
-                            Text("✈️").tag(Emoji.travel)
-                            Text("💼").tag(Emoji.job)
-                        }
-                        .pickerStyle(.segmented)
-                        
-                        
-                    }
-                    Section(header: Text("Pick a date")) {
-                        DatePicker("", selection: $selectedDate, displayedComponents: .date)
-                            .datePickerStyle(.graphical)
-                           
-                       }
-                       Section(header: Text("Pick a time")) {
-                           VStack(alignment: .leading) {
-                            Toggle("All-day", isOn: $isChecked)
-                            if !isChecked {
-                            DatePicker("", selection: $selectedDate, displayedComponents: .hourAndMinute)
-                                .datePickerStyle(.wheel)
-                               }
-                           }
-                    }
-                       Section(header: Text("Repeat")) {
-                           Picker(selection: $selectedRepeat, label: Text("Repeat")) {
-                               Text("Off").tag(Repeat.off)
-                               Text("Weekly").tag(Repeat.weekly)
-                               Text("Monthly").tag(Repeat.monthly)
-                               Text("Yearly").tag(Repeat.yearly)
-                           }
-                           .pickerStyle(.segmented)
-                           if selectedRepeat != .off {
-                               if(selectedRepeat == Repeat.weekly){
-                                   Stepper(value: $repeatWeek, in: 0...100) {
-                                       Text(getRecurrenceText2())
-                                   }
-                                   
-                               }else{
-                                   if(selectedRepeat == Repeat.monthly){
-                                       Stepper(value: $repeatMonth, in: 0...100) {
-                                           Text(getRecurrenceText2())
-                                       }
-                                   }
-                                   
-                               }
-                               
-                               Text(getRecurrenceText())
-                                   .padding()
-                           }
-                       }
-                    Section(header: Text("Remind me")) {
-                        Toggle(isOn: .constant(true)) {
-                            Text("When the countdown finishes")
-                        }
-                        Toggle(isOn: $daybefore) {
-                            Text("1 day before")
-                        }
-                        Toggle(isOn: $weekbefore) {
-                            Text("1 week before")
-                        }
-                    }
-                    Section(header: Text("Pick a color")) {
-                        VStack {
-                            HStack(spacing: 10) {
-                                Button{ print("")
-                                } label: {
-                                     Circle()
-                                        .frame(width: 40)
-                                        .overlay(){
-                                            Text("ok")
-                                        }
-                                    
-                                }
-                        }
-                            ColorPicker("", selection: $pickerColor)
-                        }
-                    }
-                   }
-                .toolbar(content: {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        
-                        Button("Cancel") {
-                            isPresented = false
-                        }
-
-                    }
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button("Save") {
-                            CountdownList.append(text)
-                            isPresented = false
-                        }
-                    }
-                })
-            }
-        })
     }
     
-    func getRecurrenceText() -> String {
-           switch selectedRepeat {
-           case .off:
-               return "No recurrence"
-           case .weekly:
-               return "Countdown will repeat every \(repeatWeek) weeks"
-           case .monthly:
-               return "Countdown will repeat every \(repeatMonth) months on the \(formattedDateString)"
-           case .yearly:
-               return "Countdown will repeat yearly on \(formattedDateString)"
-           }
+    func getRecurrenceEmoji(emojiLocal: Emoji) -> String {
+        switch emojiLocal {
+        case .party:
+            return "🎉"
+        case .travel:
+            return "✈️"
+        case .job:
+            return "💼"
+        case .lunch:
+            return "🍽️"
+        }
     }
-    func getRecurrenceText2() -> String {
-           switch selectedRepeat {
-           case .off:
-               return "No recurrence"
-           case .weekly:
-               return "Repeat every \(repeatWeek) weeks"
-           case .monthly:
-               return "Repeat every \(repeatMonth) months"
-           case .yearly:
-               return "Countdown will repeat yearly on \(formattedDateString)"
-           }
-    }
+    
+    private func startTimer() {
+            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+            }
+        }
+
+        private func stopTimer() {
+            timer?.invalidate()
+        }
     
 }
 
