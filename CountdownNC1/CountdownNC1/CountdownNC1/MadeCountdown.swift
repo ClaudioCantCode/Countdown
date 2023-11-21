@@ -53,7 +53,7 @@ struct MadeCountdown: View {
                                     Text("Remaining Time:")
                                         .font(.headline)
                                         .foregroundColor(.white)
-                                    Text("\(myEvent.remainingDays)")
+                                    Text("\(myEvent.remainingDays)d \(myEvent.remainingHours)h \(myEvent.remainingMinutes)m")
                                         .font(.title)
                                         .foregroundColor(.white)
                                 })
