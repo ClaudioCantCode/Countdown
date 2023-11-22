@@ -32,7 +32,7 @@ struct MadeCountdown: View {
                         Circle()
                             .frame(width: 150)
                             .opacity(0.6)
-                            .overlay(Text(getRecurrenceEmoji(emojiLocal: myEvent.emoji)))
+                            .overlay(Text(getRecurrenceEmoji(emojiLocal: myEvent.emoji))).accessibilityLabel(myEvent.text)
                             .font(.largeTitle)
                         
                         VStack {
@@ -53,9 +53,17 @@ struct MadeCountdown: View {
                                     Text("Remaining Time:")
                                         .font(.headline)
                                         .foregroundColor(.white)
-                                    Text("\(myEvent.remainingDays)d \(myEvent.remainingHours)h \(myEvent.remainingMinutes)m")
-                                        .font(.title)
-                                        .foregroundColor(.white)
+                                    HStack {
+                                        Text("\(myEvent.remainingDays)d")
+                                            .font(.title)
+                                            .foregroundColor(.white)
+                                        Text("\(myEvent.remainingHours)hr")
+                                            .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                                            .foregroundColor(.white)
+                                        Text("\(myEvent.remainingMinutes)min")
+                                            .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                                            .foregroundColor(.white)
+                                    }
                                 })
                         VStack {
                             Spacer()

@@ -121,15 +121,9 @@ struct ModalView: View {
                             Circle()
                                 .foregroundColor(.purple)
                                 .frame(width: 40)
-                            Button{ print("")
-                            } label: {
-                                Circle()
-                                    .foregroundColor(pickerColor)
-                                    .frame(width: 40)
-                                
-                            }
+                           
                         }
-                        ColorPicker("", selection: $pickerColor)
+                        ColorPicker("", selection: $pickerColor).accessibilityLabel("Select a color for your countdown")
                     }
                 }
             }.toolbar(content: {

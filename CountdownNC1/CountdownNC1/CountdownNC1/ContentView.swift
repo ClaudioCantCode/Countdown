@@ -68,6 +68,7 @@ struct ContentView: View {
                                     .overlay {
                                         HStack {
                                             Text(getRecurrenceEmoji(emojiLocal: event.emoji))
+                                                .accessibilityHidden(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
                                             .font(.title)
                                             
                                             VStack {
